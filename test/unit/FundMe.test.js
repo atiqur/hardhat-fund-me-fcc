@@ -81,10 +81,10 @@ const { developmentChains } = require("../../helper-hardhat-config")
                       endingDeployerBalance.add(gasCost).toString()
                   )
               })
-              it("Allows us to withdraw with multiple getFunder", async function () {
+              it.only("Allows us to withdraw with multiple getFunder", async function () {
                   // Arrange
                   const accounts = await ethers.getSigners()
-                  for (let i = 0; i < 6; i++) {
+                  for (let i = 1; i < 6; i++) {
                       const fundMeConnectedContract = await fundMe.connect(
                           accounts[i]
                       )
@@ -115,6 +115,18 @@ const { developmentChains } = require("../../helper-hardhat-config")
                           .toString(),
                       endingDeployerBalance.add(gasCost).toString()
                   )
+
+                  // Make sure that the funders are reset properly
+                  await expect(fundMe.getFunders(0)).to.be.reverted
+
+                  for (i = 1; i < 6; i++) {
+                      assert.equal(
+                          await fundMe.getAddressToAmountFunded(
+                              accounts[i].address
+                          ),
+                          0
+                      )
+                  }
               })
               it("Only allow the owner to withdraw", async function () {
                   const accounts = await ethers.getSigners()
