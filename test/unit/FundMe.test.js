@@ -81,7 +81,7 @@ const { developmentChains } = require("../../helper-hardhat-config")
                       endingDeployerBalance.add(gasCost).toString()
                   )
               })
-              it.only("Allows us to withdraw with multiple getFunder", async function () {
+              it("Allows us to withdraw with multiple getFunder", async function () {
                   // Arrange
                   const accounts = await ethers.getSigners()
                   for (let i = 1; i < 6; i++) {
