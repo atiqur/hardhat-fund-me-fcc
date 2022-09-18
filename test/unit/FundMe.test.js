@@ -131,11 +131,11 @@ const { developmentChains } = require("../../helper-hardhat-config")
               it("Only allow the owner to withdraw", async function () {
                   const accounts = await ethers.getSigners()
                   const attacker = accounts[1]
-                  const attacketConnectedContract = await fundMe.connect(
+                  const attackerConnectedContract = await fundMe.connect(
                       attacker
                   )
                   await expect(
-                      attacketConnectedContract.withdraw()
+                      attackerConnectedContract.withdraw()
                   ).to.be.revertedWith("FundMe__NotOwner")
               })
           })
